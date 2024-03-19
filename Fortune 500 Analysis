@@ -72,8 +72,7 @@ WHERE industry = "Technology";
 SELECT company_name
 FROM fortune_companies
 WHERE paid_time_off_days>15
-AND healthcare_benefits=1
-;
+AND healthcare_benefits=1;
 
 #Assess family friendliness of Fortune 500 companies based on their maternity leave. 
 SELECT company_name,
