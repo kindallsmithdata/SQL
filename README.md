@@ -2,7 +2,7 @@
 
 ## Welcome to my SQL Portfolio! 
 
-This code repository contains examples of SQL code that I've written for various projects at Western Governors University and various Data Analytics courses that I have taken during my self-learning.
+This code repository contains examples of SQL code that I've written for my coursework at Western Governors University and various Data Analytics courses that I have taken during my self-learning.
 
 I have experience with SQL in PostgreSQL (pgAdmin4), MySQL and SQLiteStudio. 
 
