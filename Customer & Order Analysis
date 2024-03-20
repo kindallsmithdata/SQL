@@ -1,9 +1,9 @@
 #In this SQL, I used SQLiteStudio to query a database with multiple tables to quantify statistics about customer and order data. 
 
 
-#How many orders were placed in January? (These results filter out messy/bad data in the orderID attribute)
+#How many orders were placed in January? (These results filter out "messy/bad data" in the orderID attribute)
 SELECT COUNT(orderid)
-FROM BIT_DB.JanSales
+FROM JanSales
 WHERE length(orderid) = 6
 AND orderid <> 'Order ID';
 
@@ -23,7 +23,7 @@ WHERE length(orderID) = 6
 AND orderID <> 'Order ID';
 
 #Which product was the cheapest one sold in January and what was the price?
-SELECT DISTINCT Product, price
+SELECT DISTINCT product, price
 FROM JanSales
 ORDER BY price asc
 LIMIT 1;
@@ -42,12 +42,12 @@ AND location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY product;
 
 #How many customers ordered more than 2 products at a time and what was the average amount spent for those customers?
-SELECT COUNT(distinct c.acctnum),AVG(f.quantity*f.price)
+SELECT COUNT(DISTINCT c.acctnum),AVG(f.quantity*f.price)
 FROM FebSales f
 LEFT JOIN customers c
-ON f.orderid=c.order_id
+ON f.orderid = c.order_id
 WHERE f.quantity > 2
-AND length(orderid) = 6
+AND LENGTH(orderid) = 6
 AND orderid <> 'Order ID';
 
 
