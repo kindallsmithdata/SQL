@@ -1,13 +1,17 @@
-#Background - In this SQL, I used SQLiteStudio to query a database with multiple tables to quantify statistics about customer and order data. 
+#Background - In this SQL, I used SQLiteStudio to query a database with multiple tables 
+to quantify statistics about customer and order data. 
 
 
-#How many orders were placed in January? (These results filter out "messy/bad data" in the orderID attribute)
+#How many orders were placed in January? (These results filter out "messy/bad data" 
+in the orderID attribute)
+
 SELECT COUNT(orderid)
 FROM JanSales
 WHERE length(orderid) = 6
 AND orderid <> 'Order ID';
 
 #How many of those orders were for a iPhone?
+
 SELECT COUNT(*) 
 FROM JanSales
 WHERE length(orderID) = 6
@@ -15,6 +19,7 @@ AND orderID <> 'Order ID'
 AND Product = 'iPhone';
 
 #Select the customer account numbers for all the orders that were placed in February.
+
 SELECT DISTINCT c.acctnum
 FROM customers c
 INNER JOIN FebSales f
@@ -23,18 +28,21 @@ WHERE length(orderID) = 6
 AND orderID <> 'Order ID';
 
 #Which product was the cheapest one sold in January and what was the price?
+
 SELECT DISTINCT product, price
 FROM JanSales
 ORDER BY price asc
 LIMIT 1;
 
 #What is the total revenue for each product sold in January?
+
 SELECT product,SUM(quantity)*price AS revenue
 FROM JanSales
 WHERE product <> ''
 GROUP BY product;
 
 #Which products were sold in February at 548 Lincoln St, Seattle, WA 98101? How many of each were sold and what was the total revenue?
+
 SELECT product,SUM(quantity)*price AS revenue, SUM(quantity)
 FROM FebSales
 WHERE product <> ''
@@ -42,6 +50,7 @@ AND location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY product;
 
 #How many customers ordered more than 2 products at a time and what was the average amount spent for those customers?
+
 SELECT COUNT(DISTINCT c.acctnum),AVG(f.quantity*f.price)
 FROM FebSales f
 LEFT JOIN customers c
@@ -51,5 +60,40 @@ AND LENGTH(orderid) = 6
 AND orderid <> 'Order ID';
 
 
- 
+#Show order dates between a given timeframe.
+
+SELECT orderdate
+FROM FebSales
+WHERE orderdate BETWEEN '02/13/19 00:00' AND '02/18/19 00:00';
+
+#Show the location of an order date with a specified date and time.
+
+SELECT location
+FROM FebSales 
+WHERE orderdate = '02/18/19 01:35';
+
+#Show the total number of sales with an order date similar to a given date.
+
+SELECT SUM(quantity)
+FROM FebSales 
+WHERE orderdate LIKE '02/18/19%';
+
+#Show products with the name including the word 'Batteries'.
+
+SELECT DISTINCT product
+FROM FebSales
+WHERE product LIKE '%Batteries%';
+
+#Show products and their prices that end with .99.
+
+SELECT DISTINCT product, price
+FROM FebSales 
+WHERE Price LIKE '%.99';
+
+#List all the products sold in Los Angeles in February and include how many of each were sold.
+
+SELECT DISTINCT product, SUM(quantity), location
+FROM FebSales
+WHERE location LIKE '%Los Angeles%'
+GROUP BY product; 
 
