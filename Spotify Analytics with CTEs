@@ -52,3 +52,34 @@ result to get an accurate tempo marking:
 
 SELECT ROUND(AVG(tempo))
 FROM spotifydata;
+
+
+#Using a CTE (Common Table Expression), Calculate the average popularity for artists in the Spotify data table. Then, for every artist with
+an average popularity of 90 or above, show their name, their average popularity and label them as a "Top Star".
+
+*Using a new "tag" column:
+
+WITH popularity_average_CTE AS (
+SELECT s.artist_name,
+AVG(s.popularity) AS average_popularity
+FROM spotifydata s 
+GROUP BY s.artist_name
+)
+SELECT  artist_name,
+        average_popularity,
+        'Top Star' AS tag
+FROM popularity_average_CTE
+WHERE average_popularity >= 90;
+
+*Using a CASE statement:
+
+WITH popularity_avg_CTE AS (
+    SELECT s.artist_name, AVG(popularity) AS avg_popularity
+    FROM spotifydata s
+    GROUP BY s.artist_name
+    )
+SELECT artist_name, avg_popularity,
+    CASE WHEN avg_popularity > 90 THEN 'Top Star'
+    ELSE NULL
+    END AS Rating
+FROM popularity_avg_CTE;
