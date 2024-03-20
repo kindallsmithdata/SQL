@@ -1,6 +1,5 @@
-# This project reveals insights about TV and Movie content hosted on Netflix. 
-
-# The project was written using the PostgreSQL dialect and utilized data from the following two Netflix datasets:
+#Background: In this SQL, I used the PostgreSQL dialect. This project reveals insights about TV 
+and Movie content hosted on Netflix. I utilized data from the following two Netflix datasets:
 
 CREATE TABLE netflix_titles_info
     ("show_id" varchar(5), "type" varchar(7), "title" varchar(58), "country" varchar(74), "date_added" timestamp, "release_year" int, "rating" varchar(5), "duration" varchar(9), "listed_in" varchar(74));
@@ -58,42 +57,48 @@ VALUES
     ('s20', NULL, 'Blanca SuÃ¡rez| IvÃ¡n Marcos| Ã“scar Casas| AdriÃ¡n Lastra| Francesc Garrido| Stefan Weinert| Julia MÃ¶ller| Alicia Chojnowski')
     ;
 
-#The following SQL was written to answer pertinent questions about the content available on Netflix:
+#SQL Analysis:
 
+#What do the tables look like? What data are we working with?
 
-
-#What do the tables look like?
 SELECT * FROM "netflix_titles_info";
+
 SELECT * FROM "netflix_people";
 
 
 #Show the show_id, directors, titles and types of shows available on Netflix. 
+
 SELECT people.show_id, people.director, titles.title, titles,type
 FROM "netflix_people" people
 LEFT JOIN "netflix_titles_info" titles
 ON people.show_id = titles.show_id;
 
 #How many movie titles are in the database (movies only, not TV shows)?
+
 SELECT COUNT(title)
 FROM "netflix_titles_info"
 WHERE type = 'Movie';
 
 #When was the most recent batch of tv shows and/or movies added to the database? 
+
 #Query #1 - shows the 10 most recently added titles in the database
 SELECT type, title, date_added
 FROM "netflix_titles_info"
 ORDER BY date_added desc
 LIMIT 10;
+
 #Query #2 - shows the most recent date titles were added to the database
 SELECT MAX(date(date_added))
 FROM "netflix_titles_info";
 
 #List all the movies and tv shows in alphabetical order.
+
 SELECT title, type
 FROM "netflix_titles_info"
 ORDER BY title asc;
 
 #Who was the Director for the movie The Starling?
+
 SELECT people.director, title.title
 FROM "netflix_people" people
 LEFT JOIN "netflix_titles_info" title
@@ -101,6 +106,7 @@ ON people.show_id = title.show_id
 WHERE title.title = 'The Starling';
 
 #What is the oldest movie in the database and what year was it made?
+
 SELECT title, release_year
 FROM "netflix_titles_info"
 WHERE type = 'Movie'
