@@ -1,4 +1,4 @@
-#Background - I used a provided film database in PostgreSQL. I created my own DETAIL and SUMMARY tables 
+#Background - In this SQL, I used a provided film database in PostgreSQL (pgAdmin4). I created my own DETAIL and SUMMARY tables 
 to answer an original (hypothetical) business question of my choosing. This project also highlights the use of triggers 
 and stored procedures using a hypothetical job scheduler. 
 
